@@ -3,19 +3,19 @@ source("../scripts/other.R")
 
 
 
-sample_map = read.table("../data/sample.group", sep="\t", header=T)
+sample_map = read.table("sample.group", sep="\t", header=T)
 sample_map = sample_map[sample_map$Group2 == "VLP"]
 
 # fig 2a-c
 #-------------------------
-dt = read.table("../00.data/vOTU.profile.relative", quote="", sep="\t", header=T, row.names=1, check.names=F)
+dt = read.table("vOTU.profile.relative", quote="", sep="\t", header=T, row.names=1, check.names=F)
 p1 <- zy_alpha(dt, sample_map, index="shannon")
 p2 <- zy_alpha(dt, sample_map, index="simpson")
 p0+p1+p2
 
 # fig 2c
 #-------------------------
-dt = read.table("../data/vOTU.profile.relative", quote="",sep="\t", header=T, row.names=1, check.names=F)
+dt = read.table("vOTU.profile.relative", quote="",sep="\t", header=T, row.names=1, check.names=F)
 p3 <- zy_pcoa(dt, sample_map=sample_map, zy_group="Group", ID="Sample", 
               sample.color=sample.color, title = "PCoA of SLE virome")
 p3
@@ -35,7 +35,7 @@ p4
 
 # fig 2e
 #-------------------------
-family.p <-  as.data.frame(t(read.table("../data/vOTU.family.s.profile", sep="\t", 
+family.p <-  as.data.frame(t(read.table("vOTU.family.s.profile", sep="\t", 
                                         header=T, row.names = 1,check.names = F)))
 family.p <- family.p[sample_map$Sample,]
 family.p <- family.p/rowSums(family.p) 

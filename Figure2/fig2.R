@@ -1,12 +1,12 @@
 source("../scripts/zy_alpha_diversity.R")
 source("../scripts/other.R")
 
-sample_map = read.table("../data/sample.group", sep="\t", header=T)
+sample_map = read.table("sample.group", sep="\t", header=T)
 sample_map = sample_map[sample_map$Group2 == "WMS"]
 
 # fig 2a-c
 #-------------------------
-dt = read.table("../00.data/vOTU.profile.relative", quote="", sep="\t", header=T, row.names=1, check.names=F)
+dt = read.table("vOTU.profile.relative", quote="", sep="\t", header=T, row.names=1, check.names=F)
 p0 <- zy_nspecies(dt, sample_map)
 p1 <- zy_alpha(dt, sample_map, index="shannon")
 p2 <- zy_alpha(dt, sample_map, index="simpson")
@@ -14,7 +14,7 @@ p0+p1+p2
 
 # fig 2d
 #-------------------------
-dt = read.table("../data/vOTU.profile.relative", quote="",sep="\t", header=T, row.names=1, check.names=F)
+dt = read.table("vOTU.profile.relative", quote="",sep="\t", header=T, row.names=1, check.names=F)
 p3 <- zy_pcoa(dt, sample_map=sample_map, zy_group="Group", ID="Sample", 
               sample.color=sample.color, title = "PCoA of SLE virome")
 p3
@@ -34,7 +34,7 @@ p4
 
 # fig 2f
 #-------------------------
-family.p <-  as.data.frame(t(read.table("../data/vOTU.family.s.profile", sep="\t", 
+family.p <-  as.data.frame(t(read.table("vOTU.family.s.profile", sep="\t", 
                                         header=T, row.names = 1,check.names = F)))
 family.p <- family.p[sample_map$Sample,]
 family.p <- family.p/rowSums(family.p) 
@@ -60,7 +60,7 @@ theme_bw()
 
 # fig 2g
 #-------------------------
-dt = read.table("../data/marker.votu", sep="\t",header=T)
+dt = read.table("marker.votu", sep="\t",header=T)
 
 p6 <- ggplot(dt, aes(x=log2FC, y=-log10(qvalue), color=enrich2))+
 geom_point()+
@@ -73,7 +73,7 @@ scale_color_manual(values=c("#ee7671","#27b9b9","gray"))
 
 # fig 2h
 #-------------------------
-host <- read.table("../sig_votu.host",sep="\t", header=T)
+host <- read.table("sig_votu.host",sep="\t", header=T)
 host <- host[order(-host$Count),]
 host$Host <- factor(host$Host,levels = unique(host$Host))
 p7 <- ggplot(host, aes(Family, Count, fill = Host)) +

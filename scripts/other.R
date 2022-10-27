@@ -29,8 +29,8 @@ filter <- function(profile, id1, id2, q, fC){
     data.list <- profile %>% subset(g1 == id1 & g2 == id2)
     data <- data.list %>% subset(count1 >= 5 | count2 >= 5)
     data$qvalue <- p.adjust(data$pvalue,method = "BH")
-    data$FC <- ifelse(data$mean1/data$mean2>1, data$mean1/data$mean2,
-                      data$mean2/data$mean1)
+    data$FC <- ifelse(data$mea$mean2>1, data$mean1/data$mean2,
+                      data$mea$mean1)
     data$enrich <- ifelse(data$mean1 > data$mean2, data$g1, data$g2)
     data$log2FC <- ifelse(data$enrich == id1,log2(data$FC),-log2(data$FC))
     data$sig <- ifelse(data$qvalue < q, ifelse(data$FC > fC,"sig","non-sig"),"non-sig")
